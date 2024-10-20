@@ -8,7 +8,6 @@ from sklearn.model_selection import train_test_split
 # Load the dataset
 df = pd.read_csv("sleep_apnea_data_numeric.csv")
 
-# Assume the last column is the label (adjust based on your dataset)
 X = df.iloc[:, :-1]  # Features
 y = df.iloc[:, -1]   # Labels
 
@@ -29,10 +28,8 @@ df_resampled.to_csv("sleep_apnea_data_resampled.csv", index=False)
 print(f"New dataset shape: {df_resampled.shape}")
 
 
-# Assuming 'df_resampled' is your DataFrame and 'AHI' is the column name for AHI values
 df_filtered = df_resampled[df_resampled['AHI'] <= 40]
 
-# Optional: Save the filtered DataFrame to a new CSV file
 df_filtered.to_csv("sleep_apnea_data_filtered.csv", index=False)
 
 print(f"Filtered dataset shape: {df_filtered.shape}")
@@ -41,8 +38,6 @@ print(f"Filtered dataset shape: {df_filtered.shape}")
 df_resampled=df_filtered
 
 import matplotlib.pyplot as plt
-
-# Load the DataFrame from the CSV
 
 # Create a scatter plot for the AHI column
 plt.figure(figsize=(10, 6))
@@ -58,7 +53,7 @@ plt.show()
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
-# Assuming 'data' is the DataFrame containing the dataset
+
 X = df_resampled[['Baseline', 'Apnea Threshold', 'Hypopnea Threshold', 'Total events detected', 'Estimated sleep time']]
 y = df_resampled['label']
 scaler = StandardScaler()
@@ -76,13 +71,6 @@ from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 
-# Load your dataset
-# df = pd.read_csv("your_dataset.csv")  # Uncomment and load your dataset
-
-# Assuming X and y are defined as features and labels
-# X = df.drop(columns=['label'])  # Adjust according to your dataset
-# y = df['label']
-
 models = {
     "Random Forest": RandomForestClassifier(random_state=42),
     "Gradient Boosting": GradientBoostingClassifier(random_state=42),
@@ -91,7 +79,7 @@ models = {
 
 results = {}
 for model_name, model in models.items():
-    scores = cross_val_score(model, X, y, cv=5)  # Replace X and y with your feature and label variables
+    scores = cross_val_score(model, X, y, cv=5)  
     results[model_name] = {
         "Mean Accuracy": scores.mean(),
         "Standard Deviation": scores.std(),
@@ -131,9 +119,6 @@ print("Best hyperparameters:", grid_search.best_params_)
 
 from sklearn.model_selection import cross_val_score, StratifiedKFold
 
-# Assuming you have already split your data into X_train, y_train, X_test, y_test
-
-# Initialize classifier (e.g., Random Forest)
 model = SVC()
 
 # Use StratifiedKFold for cross-validation to maintain class distribution in each fold
@@ -156,7 +141,6 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 # Load your dataset
 df = pd.read_csv("sleep_apnea_data_filtered.csv")
 
-# Select features and target variable (assuming 'AHI' is your target variable)
 X = df.drop(columns=['AHI','label'])  # Drop the target variable
 y = df['AHI']
 
@@ -185,26 +169,23 @@ print(f"R^2 Score: {r2}")
 
 import joblib
 
-# Assuming 'best_model' is the model you want to save
 joblib.dump(best_svm, 'best_svm.pkl')
 
 import joblib
 
-# Assuming 'best_model' is the model you want to save
 joblib.dump(rf_regressor, 'rf_regressor.pkl')
 
 import joblib
 import pandas as pd
 
 # Load the trained model
-model_path = 'best_svm.pkl'  # Update with your model path
+model_path = 'best_svm.pkl'  
 model = joblib.load(model_path)
 ahi_predictor = joblib.load("rf_regressor.pkl")
 
 # Prepare the data for prediction
-# Assuming you have the calculated values from your previous code
 data_to_predict = {
-    "Baseline":[93],  # Replace with your actual function call if needed
+    "Baseline":[93],  
     "Apnea Threshold": [-9.3],
     "Hypopnea Threshold": [-65],
     "Total events detected": [167],  # Total events detected
@@ -216,7 +197,7 @@ input_df = pd.DataFrame(data_to_predict)
 
 # Make predictions
 predicted_ahi = ahi_predictor.predict(input_df)  # Predict AHI
-predicted_sleep_apnea_label = model.predict(input_df)  # Replace with the specific prediction call for labels if different
+predicted_sleep_apnea_label = model.predict(input_df)  
 
 # Display predictions
 print(f"Predicted AHI: {predicted_ahi}")
