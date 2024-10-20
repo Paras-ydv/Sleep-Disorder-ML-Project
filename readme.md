@@ -20,3 +20,6 @@ Support Vector Machine (SVM) for classifying sleep apnea severity (best_svm.pkl)
 The tool accepts Polysomnography (PSG) files in EDF format and processes the following signals:
 - Respiratory (oro-nasal airflow): For detecting apnea and hypopnea events.
 - EEG (Fpz-Cz): For estimating sleep time based on delta band power.
+
+### Data Source
+https://physionet.org/content/sleep-edfx/1.0.0/
