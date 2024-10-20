@@ -29,11 +29,9 @@ def remove_artifacts(data, lower_bound=-2000, upper_bound=2000):
 def calculate_baseline(resp_flow, percentile=50):
     # Check if resp_flow contains NaN or Inf values
     if np.isnan(resp_flow).any():
-        # print("Warning: resp_flow contains NaN values. Replacing with 0.")
         resp_flow = np.nan_to_num(resp_flow, nan=0.0)  # Replace NaNs with 0
 
     if np.isinf(resp_flow).any():
-        # print("Warning: resp_flow contains infinite values. Replacing with 0.")
         resp_flow = np.nan_to_num(resp_flow, posinf=0.0, neginf=0.0)  # Replace Inf with 0
 
     # Ensure the data is not empty
@@ -104,7 +102,7 @@ def estimate_sleep_time(eeg_data, sampling_rate, epoch_duration=30, delta_band=(
         delta_powers.append(delta_power)
 
     # Calculate a threshold based on the median delta power across epochs
-    delta_power_threshold = np.median(delta_powers) * 1.5  # Adjust the multiplier as needed
+    delta_power_threshold = np.median(delta_powers) * 1.5  
 
     # Count the number of epochs where delta power exceeds the threshold
     for delta_power in delta_powers:
@@ -171,21 +169,11 @@ for file in psg_files:
         "AHI": ahi,
         "Apnea Status": apnea_status
     }
-
-    # Append the row to the DataFrame
-    # df = df.append(row, ignore_index=True)
+    
     df = pd.concat([df, pd.DataFrame([row])], ignore_index=True)
     print(f"Apnea Status: {apnea_status}")
     print()
 print(sleep_disorders)
-# apnea_status_mapping = {
-#     "No Sleep Apnea": 0,
-#     "Mild Sleep Apnea": 1,
-#     "Moderate Sleep Apnea": 2,
-#     "Severe Sleep Apnea": 3
-# }
 
-# Apply the mapping to the 'Apnea Status' column
-# df['Apnea Status'] = df['Apnea Status'].map(apnea_status_mapping)
 df.to_csv('sleep_apnea_data_numeric.csv', index=False)
 
