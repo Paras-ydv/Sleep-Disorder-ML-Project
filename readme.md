@@ -27,5 +27,6 @@ https://physionet.org/content/sleep-edfx/1.0.0/
 ### Model performance
 
 These are the metrics we have achieved on the SVM model:
+
 Cross-validation accuracy scores: [0.94736842 0.78947368 0.94594595 0.94594595 0.91891892]
 Mean accuracy: 0.9095305832147937
